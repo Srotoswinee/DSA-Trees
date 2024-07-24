@@ -1,35 +1,43 @@
-/*Level order traversal*/
-#include<iostream>
-#include<queue>
+#include <bits/stdc++.h>
 using namespace std;
-class Node{
+class node {
 public:
     int data;
-    Node* left;
-    Node* right;
-    Node(int data){
-        this->data=data;
-        left=NULL;
-        right=NULL;
-    }
+    node* left;
+    node* right;
 };
-Node* buildTree(){
-    int data;
-    cout<<"Enter the data:"<<endl;
-    cin>>data;
-    if(data==-1){
-        return NULL;
+int maxDepth(node* node)
+{
+    if (node == NULL)
+        return 0;
+    else {
+        int lDepth = maxDepth(node->left);
+        int rDepth = maxDepth(node->right);
+        if (lDepth > rDepth)
+            return (lDepth + 1);
+        else
+            return (rDepth + 1);
     }
-    Node* root=new Node(data);
-    cout<<"Enter data for left part of"<<data<<"node"<<endl;
-    root->left=buildTree();
-    cout<<"Enter data for right part of"<<data<<"node"<<endl;
-    root->right=buildTree();
-    return root;
 }
-int main(){
-    Node* root=NULL;
-    root=buildTree();
+node* newNode(int data)
+{
+    node* Node = new node();
+    Node->data = data;
+    Node->left = NULL;
+    Node->right = NULL;
+
+    return (Node);
+}
+int main()
+{
+    node* root = newNode(1);
+
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(5);
+
+    cout << "Height of tree is " << maxDepth(root);
     return 0;
 }
 
